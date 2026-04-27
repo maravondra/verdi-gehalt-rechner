@@ -483,6 +483,54 @@
     border-top: 1px solid rgba(255, 152, 0, 0.2);
   }
 
+  /* Daily Life Impact */
+  .daily-impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .impact-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .impact-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--warning);
+  }
+
+  .impact-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .impact-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .impact-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--warning);
+    margin-bottom: 0.5rem;
+  }
+
+  .impact-subtext {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
   /* Footer */
   .footer {
     background: var(--dark-gray);
@@ -711,6 +759,55 @@
                 <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
                   Bei DT erhalten Sie insgesamt ca. € {{ result()!.totalDifference2026.toLocaleString('de-DE') }} mehr Gehalt
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Daily Life Impact -->
+          <div style="margin-top: 2rem; padding: 2rem; background: linear-gradient(135deg, rgba(255, 152, 0, 0.1) 0%, rgba(227, 28, 35, 0.1) 100%); border-radius: 12px; border: 2px solid var(--warning);">
+            <h3 style="margin-bottom: 1.5rem; color: var(--dark-gray); text-align: center;">
+              💸 Was bedeutet der Unterschied im täglichen Leben?
+            </h3>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
+              Mit €{{ result()!.totalDifference2026.toLocaleString('de-DE') }} Unterschied (2024-2026) könnten Sie sich leisten:
+            </p>
+
+            <div class="daily-impact-grid">
+              <div class="impact-card">
+                <div class="impact-icon">🍽️</div>
+                <div class="impact-label">Mittagessen</div>
+                <div class="impact-value">
+                  {{ (result()!.totalDifference2026 / 12).toLocaleString('de-DE', { maximumFractionDigits: 0 }) }}
+                </div>
+                <div class="impact-subtext">à € 12 pro Lunch</div>
+              </div>
+
+              <div class="impact-card">
+                <div class="impact-icon">🚗</div>
+                <div class="impact-label">Auto Kilometer</div>
+                <div class="impact-value">
+                  {{ (result()!.totalDifference2026 / 0.30).toLocaleString('de-DE', { maximumFractionDigits: 0 }) }}
+                </div>
+                <div class="impact-subtext">KM à € 0,30/KM</div>
+              </div>
+
+              <div class="impact-card">
+                <div class="impact-icon">🛒</div>
+                <div class="impact-label">Einkaufskorb</div>
+                <div class="impact-value">
+                  {{ (result()!.totalDifference2026 / 90).toLocaleString('de-DE', { maximumFractionDigits: 1 }) }}
+                </div>
+                <div class="impact-subtext">à € 90 pro Einkauf</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.7); border-radius: 8px; border-left: 4px solid var(--warning);">
+              <div style="font-size: 0.9rem; color: var(--text-secondary); text-align: center;">
+                <strong>Monatlicher Unterschied:</strong> € {{ (result()!.difference / 12).toLocaleString('de-DE', { maximumFractionDigits: 2 }) }} pro Monat
+              </div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-top: 0.5rem;">
+                Das sind ca. {{ ((result()!.difference / 12) / 12).toLocaleString('de-DE', { maximumFractionDigits: 0 }) }} Mittagessen oder 
+                {{ ((result()!.difference / 12) / 0.30).toLocaleString('de-DE', { maximumFractionDigits: 0 }) }} Auto-KM pro Monat
               </div>
             </div>
           </div>
