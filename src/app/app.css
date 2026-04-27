@@ -1,0 +1,54 @@
+/* Global Styles for Verdi Gehalt Rechner */
+
+:root {
+  --verdi-red: #E31C23;
+  --telekom-magenta: #E20074;
+  --dark-gray: #333333;
+  --light-gray: #F5F5F5;
+  --border-gray: #DDDDDD;
+  --text-primary: #2B2B2B;
+  --text-secondary: #666666;
+  --success: #00A651;
+  --warning: #FF9800;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Remove default margins and paddings */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #FFFFFF;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--verdi-red);
+  outline-offset: 2px;
+}
+
+/* Improve text rendering */
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utility classes */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
