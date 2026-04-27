@@ -238,6 +238,25 @@
     box-shadow: 0 4px 12px rgba(227, 28, 35, 0.3);
   }
 
+  .btn-secondary {
+    width: 100%;
+    padding: 1rem;
+    background: var(--light-gray);
+    color: var(--text-primary);
+    border: 1px solid var(--border-gray);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .btn-secondary:hover {
+    transform: translateY(-2px);
+    background: var(--border-gray);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
   /* Results Section */
   .result-item {
     margin-bottom: 2rem;
@@ -262,6 +281,25 @@
 
   .result-value.telekom {
     color: var(--telekom-magenta);
+  }
+
+  .result-value.success {
+    color: var(--success);
+  }
+
+  .result-value.warning {
+    color: var(--warning);
+  }
+
+  .salary-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+    margin-top: 0.75rem;
+    font-weight: 600;
   }
 
   .result-bar {
@@ -347,6 +385,17 @@
     font-weight: 700;
   }
 
+  .info-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--verdi-red) 0%, var(--telekom-magenta) 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+
   /* Footer */
   .footer {
     background: var(--dark-gray);
@@ -427,100 +476,131 @@
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
-        <h1>Gehalt Transparent Berechnen</h1>
-        <p class="hero-subtitle">Vergleichen Sie Ihre Gehaltsfairness mit den Verdi Standards und Telekom Benchmark</p>
+        <h1>T-Systems Gehalt 2024</h1>
+        <p class="hero-subtitle">Sehen Sie den Unterschied zwischen Ihrer Gehaltserhöhung bei T-Systems (4%) und der Deutschen Telekom (6%)</p>
       </div>
       <div class="hero-image">
-        <div class="hero-badge">💼</div>
+        <div class="hero-badge">💰</div>
       </div>
     </section>
 
     <!-- Calculator Section -->
     <section class="calculator-section">
       <div class="calculator-card">
-        <h2>Ihr Gehalt berechnen</h2>
+        <h2>T-Systems Gehaltsvergleich</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
+          Vergleichen Sie Ihr T-Systems Gehalt mit der Erhöhung der Deutschen Telekom
+        </p>
         
         <div class="form-group">
-          <label for="brutto">Brutto Jahresgehalt (€)</label>
-          <input type="number" id="brutto" class="input-field" placeholder="z.B. 45000" min="0">
+          <label for="salary2023">Brutto Jahresgehalt 2023 (€)</label>
+          <input 
+            type="number" 
+            id="salary2023" 
+            class="input-field" 
+            placeholder="z.B. 45000" 
+            min="0"
+            [(ngModel)]="salary2023"
+            name="salary2023">
         </div>
 
-        <div class="form-group">
-          <label for="position">Position / Berufsgruppe</label>
-          <select id="position" class="input-field">
-            <option value="">-- Bitte wählen --</option>
-            <option value="tech">IT / Techniker</option>
-            <option value="sales">Vertrieb</option>
-            <option value="admin">Verwaltung</option>
-            <option value="other">Sonstiges</option>
-          </select>
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn-primary" (click)="calculateSalary()" style="flex: 1;">Vergleich Berechnen</button>
+          <button class="btn-secondary" (click)="resetForm()" style="flex: 1;">Zurücksetzen</button>
         </div>
-
-        <div class="form-group">
-          <label for="experience">Berufserfahrung (Jahre)</label>
-          <input type="number" id="experience" class="input-field" placeholder="z.B. 5" min="0">
-        </div>
-
-        <button class="btn-primary">Jetzt Berechnen</button>
       </div>
 
       <!-- Results Section -->
       <div class="results-card">
-        <h2>Ihre Ergebnisse</h2>
+        <h2>Gehalts-Vergleich 2024</h2>
         
-        <div class="result-item">
-          <div class="result-label">
-            <span>Verdi Empfohlenes Minimum</span>
-            <span class="result-value verdi">€ 42.500</span>
+        @if (result()) {
+          <!-- Start Salary -->
+          <div class="result-item" style="background: var(--light-gray); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+            <div class="result-label">
+              <span>Ihr Gehalt 2023</span>
+              <span class="result-value">€ {{ result()!.salary2023.toLocaleString('de-DE') }}</span>
+            </div>
           </div>
-          <div class="result-bar">
-            <div class="result-fill verdi" style="width: 94%"></div>
-          </div>
-          <span class="result-status positive">✓ Über Verdi Standard</span>
-        </div>
 
-        <div class="result-item">
-          <div class="result-label">
-            <span>Deutsche Telekom Branche Mittel</span>
-            <span class="result-value telekom">€ 51.200</span>
+          <!-- T-Systems Result -->
+          <div class="result-item" style="border: 2px solid var(--telekom-magenta); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+            <div class="result-label">
+              <span style="font-size: 1.1rem; font-weight: 600; color: var(--telekom-magenta);">📱 T-Systems (4%)</span>
+              <span class="result-value telekom">+€ {{ result()!.tsystems.increase.toLocaleString('de-DE', { maximumFractionDigits: 2 }) }}</span>
+            </div>
+            <div class="result-bar">
+              <div class="result-fill telekom" style="width: 100%"></div>
+            </div>
+            <div class="salary-summary">
+              <span>Neues Gehalt 2024:</span>
+              <span style="font-size: 1.3rem; font-weight: 700; color: var(--telekom-magenta);">€ {{ result()!.tsystems.newSalary.toLocaleString('de-DE') }}</span>
+            </div>
           </div>
-          <div class="result-bar">
-            <div class="result-fill telekom" style="width: 100%"></div>
+
+          <!-- Deutsche Telekom Result -->
+          <div class="result-item" style="border: 2px solid var(--verdi-red); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+            <div class="result-label">
+              <span style="font-size: 1.1rem; font-weight: 600; color: var(--verdi-red);">🔴 Deutsche Telekom (6%)</span>
+              <span class="result-value verdi">+€ {{ result()!.dt.increase.toLocaleString('de-DE', { maximumFractionDigits: 2 }) }}</span>
+            </div>
+            <div class="result-bar">
+              <div class="result-fill verdi" style="width: 100%"></div>
+            </div>
+            <div class="salary-summary">
+              <span>Neues Gehalt 2024:</span>
+              <span style="font-size: 1.3rem; font-weight: 700; color: var(--verdi-red);">€ {{ result()!.dt.newSalary.toLocaleString('de-DE') }}</span>
+            </div>
           </div>
-          <span class="result-status warning">⚠ Unter Branchenmittel</span>
-        </div>
+
+          <!-- Difference -->
+          <div class="result-item" style="background: linear-gradient(135deg, rgba(227, 28, 35, 0.1) 0%, rgba(226, 0, 116, 0.1) 100%); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-gray);">
+            <div class="result-label">
+              <span style="font-size: 1.1rem; font-weight: 600;">Unterschied DT vs T-Systems</span>
+              <span class="result-value warning" style="color: var(--warning); font-size: 1.4rem;">-€ {{ result()!.difference.toLocaleString('de-DE', { maximumFractionDigits: 2 }) }}</span>
+            </div>
+            <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.95rem;">
+              Bei Deutsche Telekom bekämen Sie <strong>€ {{ result()!.difference.toLocaleString('de-DE', { maximumFractionDigits: 2 }) }} mehr</strong> pro Jahr als bei T-Systems.
+              Dies entspricht <strong>€ {{ (result()!.difference / 12).toLocaleString('de-DE', { maximumFractionDigits: 2 }) }} pro Monat</strong>.
+            </p>
+          </div>
+        } @else {
+          <p style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+            Geben Sie Ihr aktuelles Gehalt ein und klicken Sie auf "Vergleich Berechnen", um den Unterschied zwischen T-Systems und Deutsche Telekom zu sehen.
+          </p>
+        }
       </div>
     </section>
 
     <!-- Info Section -->
     <section class="info-section">
       <div class="info-card">
-        <h3>🛡️ Verdi Vorteile</h3>
+        <h3>� T-Systems (4%)</h3>
         <ul class="info-list">
-          <li>Tarifschutz und Mindestgehalt</li>
-          <li>Faire Arbeitszeiten</li>
-          <li>Zusatzversicherungen</li>
-          <li>Eintrittsboni und Boni-Regelungen</li>
+          <li>Moderate Gehaltserhöhung</li>
+          <li>Stabiles Unternehmen</li>
+          <li>Gute Bestandskundenbindung</li>
+          <li>Telekom-Tochterunternehmen</li>
         </ul>
       </div>
       
       <div class="info-card">
-        <h3>📊 Branchenstandards</h3>
+        <h3>🔴 Deutsche Telekom (6%)</h3>
         <ul class="info-list">
-          <li>Deutsche Telekom Durchschnitt</li>
-          <li>Regionale Unterschiede berücktigen</li>
-          <li>Erfahrung und Qualifikation</li>
-          <li>Zusatzleistungen und Benefits</li>
+          <li>Bessere Gehaltserhöhung</li>
+          <li>Höhere Marktposition</li>
+          <li>Mehr tarifliche Benefits</li>
+          <li>Stärkere Tarifvertrag-Position</li>
         </ul>
       </div>
       
       <div class="info-card">
-        <h3>📈 Gehaltsoptimierung</h3>
+        <h3>💡 Tipps für T-Systems Mitarbeiter</h3>
         <ul class="info-list">
-          <li>Verhandlungsstrategien</li>
-          <li>Fortbildungsmöglichkeiten</li>
-          <li>Karrierepfade</li>
-          <li>Wechselchancen</li>
+          <li>Interne Wechselmöglichkeiten nutzen</li>
+          <li>Weiterbildung investieren</li>
+          <li>Verhandeln Sie Ihr Gehalt</li>
+          <li>Kennen Sie den Markt</li>
         </ul>
       </div>
     </section>
@@ -529,7 +609,7 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-content">
-      <p>&copy; 2026 Verdi Gehalt Rechner. Unabhängige Informationen für faire Bezahlung.</p>
+      <p>&copy; 2026 T-Systems Gehalt Vergleich. Transparenz bei Gehaltserhöhungen.</p>
       <div class="footer-links">
         <a href="#">Impressum</a>
         <a href="#">Datenschutz</a>
