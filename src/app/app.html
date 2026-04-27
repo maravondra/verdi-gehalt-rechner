@@ -396,6 +396,93 @@
     margin-top: 1rem;
   }
 
+  /* Yearly Comparison */
+  .yearly-comparison {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .year-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .year-header {
+    background: linear-gradient(135deg, var(--verdi-red) 0%, var(--telekom-magenta) 100%);
+    color: white;
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  .company-comparison {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .company-data {
+    padding: 0.75rem;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .company-data.ts {
+    background: rgba(226, 0, 116, 0.05);
+    border: 1px solid rgba(226, 0, 116, 0.2);
+  }
+
+  .company-data.dt {
+    background: rgba(227, 28, 35, 0.05);
+    border: 1px solid rgba(227, 28, 35, 0.2);
+  }
+
+  .company-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .company-data .salary {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .company-data.ts .salary {
+    color: var(--telekom-magenta);
+  }
+
+  .company-data.dt .salary {
+    color: var(--verdi-red);
+  }
+
+  .year-increase {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--success);
+    background: rgba(0, 166, 81, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  .year-diff {
+    background: rgba(255, 152, 0, 0.1);
+    color: var(--warning);
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 152, 0, 0.2);
+  }
+
   /* Footer */
   .footer {
     background: var(--dark-gray);
@@ -563,6 +650,69 @@
               Bei Deutsche Telekom bekämen Sie <strong>€ {{ result()!.difference.toLocaleString('de-DE', { maximumFractionDigits: 2 }) }} mehr</strong> pro Jahr als bei T-Systems.
               Dies entspricht <strong>€ {{ (result()!.difference / 12).toLocaleString('de-DE', { maximumFractionDigits: 2 }) }} pro Monat</strong>.
             </p>
+          </div>
+
+          <!-- Yearly Comparison -->
+          <div style="margin-top: 2rem; padding: 1.5rem; background: var(--light-gray); border-radius: 12px;">
+            <h3 style="margin-bottom: 1.5rem; color: var(--dark-gray);">📊 Gehalts-Entwicklung 2023-2026</h3>
+            
+            <div class="yearly-comparison">
+              @for (i of [0, 1, 2, 3]; track i) {
+                <div class="year-card">
+                  <div class="year-header">{{ result()!.tsystems.yearlyData[i].year }}</div>
+                  
+                  <div class="company-comparison">
+                    <div class="company-data ts">
+                      <div class="company-name">T-Systems (4%)</div>
+                      <div class="salary">€ {{ result()!.tsystems.yearlyData[i].salary.toLocaleString('de-DE') }}</div>
+                      @if (i > 0) {
+                        <div class="year-increase">+€ {{ (result()!.tsystems.yearlyData[i].salary - result()!.tsystems.yearlyData[i-1].salary).toLocaleString('de-DE', { maximumFractionDigits: 0 }) }}</div>
+                      }
+                    </div>
+                    
+                    <div class="company-data dt">
+                      <div class="company-name">Deutsche Telekom (6%)</div>
+                      <div class="salary">€ {{ result()!.dt.yearlyData[i].salary.toLocaleString('de-DE') }}</div>
+                      @if (i > 0) {
+                        <div class="year-increase">+€ {{ (result()!.dt.yearlyData[i].salary - result()!.dt.yearlyData[i-1].salary).toLocaleString('de-DE', { maximumFractionDigits: 0 }) }}</div>
+                      }
+                    </div>
+                  </div>
+
+                  @if (i > 0) {
+                    <div class="year-diff">
+                      Unterschied: €
+                      {{ result()!.difference.toLocaleString('de-DE', { maximumFractionDigits: 0 }) }}
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Total Summary -->
+            <div style="margin-top: 1.5rem; padding: 1rem; background: white; border-radius: 8px; border-left: 4px solid var(--verdi-red);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span style="font-weight: 600;">Gesamte Erhöhung 2023-2026</span>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <div style="color: var(--text-secondary); font-size: 0.9rem;">T-Systems (4% jährlich)</div>
+                  <div style="font-size: 1.2rem; font-weight: 700; color: var(--telekom-magenta);">+€ {{ result()!.tsystems.totalIncrease2023to2026.toLocaleString('de-DE') }}</div>
+                </div>
+                <div>
+                  <div style="color: var(--text-secondary); font-size: 0.9rem;">Deutsche Telekom (6% jährlich)</div>
+                  <div style="font-size: 1.2rem; font-weight: 700; color: var(--verdi-red);">+€ {{ result()!.dt.totalIncrease2023to2026.toLocaleString('de-DE') }}</div>
+                </div>
+              </div>
+              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-gray); text-align: center;">
+                <div style="color: var(--warning); font-size: 1.1rem; font-weight: 700;">
+                  Unterschied bis 2026: € {{ result()!.totalDifference2026.toLocaleString('de-DE') }}
+                </div>
+                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
+                  Bei DT erhalten Sie insgesamt ca. € {{ result()!.totalDifference2026.toLocaleString('de-DE') }} mehr Gehalt
+                </div>
+              </div>
+            </div>
           </div>
         } @else {
           <p style="text-align: center; color: var(--text-secondary); padding: 2rem;">
