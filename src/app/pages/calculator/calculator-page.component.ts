@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -36,6 +36,9 @@ interface ComparisonResult {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalculatorPageComponent {
+
+  readonly salary = signal<number>(history.state?.salary ?? 0);
+
   salary2023 = signal<number | null>(null);
   result = signal<ComparisonResult | null>(null);
 

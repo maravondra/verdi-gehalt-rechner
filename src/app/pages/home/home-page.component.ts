@@ -17,7 +17,7 @@ export class HomePageComponent {
     throw new Error('Method not implemented.');
   }
   calculateSalary() {
-    this.router.navigate(['/rechner'], { queryParams: { salary: this.salary2023() } });
+    this.router.navigate(['/rechner'], { state: { salary: this.salary2023() } });
   }
   salary2023 = signal<number | null>(null);
 
