@@ -1,0 +1,68 @@
+<!-- Verdi und Deutsche Telekom Gehalt Rechner -->
+
+<div class="container">
+  <header class="header">
+    <div class="header-content">
+      <div class="logo-section">
+        <div class="logo-badge">
+          <span class="logo-verdi">VERDI</span>
+        </div>
+        <span class="logo-text">Gehalt Rechner</span>
+      </div>
+      <nav class="nav">
+        <a routerLink="/" class="nav-link">Startseite</a>
+        <a href="https://www.verdi.de/" target="_blank" rel="noreferrer" class="nav-link">Verdi</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="hero">
+      <div class="hero-content">
+        <h1>T-Systems Gehalt 2024</h1>
+        <p class="hero-subtitle">Sehen Sie den Unterschied zwischen Ihrer Gehaltserhoehung bei T-Systems (4%) und der Deutschen Telekom (6%)</p>
+      </div>
+      <div class="hero-image">
+        <div class="hero-badge">💰</div>
+      </div>
+    </section>
+
+    <section class="calculator-section">
+      <div class="calculator-card">
+        <h2>T-Systems Gehaltsvergleich</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
+          Vergleichen Sie Ihr T-Systems Gehalt mit der Erhoehung der Deutschen Telekom
+        </p>
+
+        <div class="form-group">
+          <label for="salary2023">Brutto Jahresgehalt 2023 (EUR)</label>
+          <input
+            type="number"
+            id="salary2023"
+            class="input-field"
+            placeholder="z.B. 45000"
+            min="0"
+            [(ngModel)]="salary2023"
+            name="salary2023">
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn-primary" (click)="calculateSalary()" style="flex: 1;">Vergleich Berechnen</button>
+          <button class="btn-secondary" (click)="resetForm()" style="flex: 1;">Zuruecksetzen</button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2026 T-Systems Gehalt Vergleich. Transparenz bei Gehaltserhoehungen.</p>
+      <div class="footer-links">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+        <a href="#">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+</div>
