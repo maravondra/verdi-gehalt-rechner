@@ -2,7 +2,12 @@ import { ChangeDetectionStrategy, Component, OnInit, signal, computed } from '@a
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { StatisticCardComponent } from '../statistic-card/statistic-card.component';
-import { CurrencyPipe } from '@angular/common';
+import { CommonModule, registerLocaleData, CurrencyPipe, DatePipe } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+
+// Zaregistrujeme německá data pod oběma identifikátory pro jistotu
+registerLocaleData(localeDe, 'de');
+registerLocaleData(localeDe, 'de-DE'); // <-- Přidej tento řádek
 
 interface YearlyGroup {
   year: number;
@@ -26,7 +31,7 @@ export interface MetricState {
 
 @Component({
   selector: 'app-calculator-page',
-  imports: [FormsModule, RouterLink, StatisticCardComponent, CurrencyPipe],
+  imports: [FormsModule, RouterLink, StatisticCardComponent, CurrencyPipe, DatePipe, CommonModule],
   templateUrl: './calculator-page.component.html',
   styleUrl: './calculator-page.component.scss', // <-- Zde: styleUrl místo styleUrls a bez hranatých závorek []
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -63,6 +68,11 @@ export class CalculatorPageComponent implements OnInit {
     let salaryInOktober2024 = salaryInJuli2024 + salaryInJuli2024 * this.rateTelekom;
     let salaryInAugust2025 = salaryInOktober2024 + this.increaseSallary;
     return salaryInAugust2025;
+  }
+
+  createDate(year: number, month: number): Date {
+    // Month v JS Date je indexovaný od 0 (0 = leden, 11 = prosinec)
+    return new Date(year, month - 1, 1);
   }
 
   // Reaktivní výpočet celé tabulky pomocí Angular Signals

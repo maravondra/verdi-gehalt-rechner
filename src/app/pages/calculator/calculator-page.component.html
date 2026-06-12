@@ -116,7 +116,7 @@
                   onmouseout="this.style.backgroundColor = 'transparent'"
                 >
                   <td style="padding: 10px; text-align: center; color: #64748b; font-weight: 500">
-                    {{ row.month }}
+                    {{ createDate(row.year, row.month) | date: 'LLLL' : '' : 'de-DE' }}
                   </td>
                   <td style="padding: 10px; color: #ef4444; font-weight: 500">
                     {{ row.different | currency: 'EUR' : 'symbol' : '1.2-2' }}
