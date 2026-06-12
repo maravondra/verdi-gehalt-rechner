@@ -21,12 +21,15 @@ export interface TimelineRow {
   tsi: number;
   different: number;
   dt: number;
-  note?: string;
+  TsiNote?: string;
+  DTENote?: string;
 }
 
 export interface MetricState {
   tsi: number;
   different: number;
+  TsiNote?: string;
+  DTENote?: string;
 }
 
 @Component({
@@ -90,19 +93,21 @@ export class CalculatorPageComponent implements OnInit {
     for (let year = 2024; year <= 2026; year++) {
       for (let month = 1; month <= 12; month++) {
         let note = '';
+        currentState.TsiNote = undefined;
+        currentState.DTENote = undefined;
         if (year === 2024) {
           if (month === 7) {
             currentState.different += 1550;
-            note = '+1.550 € f';
+            currentState.DTENote = 'Inflationsausgleichsprämie 1.550€ ';
           } else if (month === 8) {
             currentState.different -= 1550;
           } else if (month === 10) {
             currentState.different += this.defaultSalary() * 0.06;
-            note = '6%';
+            currentState.DTENote = 'Erhöhug 6%';
           } else if (month === 12) {
             currentState.tsi += 1550;
             currentState.different -= 1550;
-            note = 'Přesun do TSI';
+            currentState.TsiNote = 'Inflationsausgleichsprämie 1.550€ ';
           }
         } else if (year === 2025) {
           if (month === 1) {
@@ -110,13 +115,14 @@ export class CalculatorPageComponent implements OnInit {
             currentState.different += 1550;
           } else if (month === 9) {
             currentState.tsi += 190;
-            note = '190 €';
+            currentState.TsiNote = 'Erhöhung 190 €';
+            currentState.DTENote = 'Erhöhung 190 €';
           }
         } else if (year === 2026) {
           if (month === 6) {
             currentState.tsi += this.defaultSalary() * 0.04;
             currentState.different -= 149.6;
-            note = '4%';
+            currentState.TsiNote = 'Erhöhug 4%';
           }
         }
 
@@ -124,7 +130,15 @@ export class CalculatorPageComponent implements OnInit {
         const finalDifferent = Math.round(currentState.different * 100) / 100;
         const finalDt = Math.round((finalTsi + finalDifferent) * 100) / 100;
 
-        data.push({ year, month, tsi: finalTsi, different: finalDifferent, dt: finalDt, note });
+        data.push({
+          year,
+          month,
+          tsi: finalTsi,
+          different: finalDifferent,
+          dt: finalDt,
+          TsiNote: currentState.TsiNote,
+          DTENote: currentState.DTENote,
+        });
       }
     }
     return data;
