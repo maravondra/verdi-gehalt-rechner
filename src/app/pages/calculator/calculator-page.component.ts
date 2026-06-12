@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -30,90 +31,65 @@ interface ComparisonResult {
 
 @Component({
   selector: 'app-calculator-page',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, DecimalPipe],
   templateUrl: './calculator-page.component.html',
   styleUrl: './calculator-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalculatorPageComponent {
 
-  readonly salary = signal<number>(history.state?.salary ?? 0);
+  readonly defaultSalary = signal<number>(history.state?.salary ?? 0);
+  
+  readonly result = computed(() => {
+    const salary = this.defaultSalary();
 
-  salary2023 = signal<number | null>(null);
-  result = signal<ComparisonResult | null>(null);
-
-  calculateSalary(): void {
-    const salary = this.salary2023();
-
+    // Validace přímo v computed (pokud není platové zadání, vrátíme null nebo prázdný stav)
     if (!salary || salary <= 0) {
-      alert('Bitte fuellen Sie alle Felder aus!');
-      return;
+      return null;
     }
 
-    const tsystemsYears: YearlyData[] = [];
-    const ts2024Salary = salary * 1.04;
-    for (let year = 2023; year <= 2026; year++) {
-      if (year === 2023) {
-        tsystemsYears.push({
+    const generateYearlyData = (baseSalary: number, multiplier: number) => {
+      const newSalary = baseSalary * multiplier;
+      const years: YearlyData[] = [];
+      
+      for (let year = 2023; year <= 2026; year++) {
+        years.push({
           year,
-          salary,
-          increase: 0,
-        });
-      } else {
-        tsystemsYears.push({
-          year,
-          salary: ts2024Salary,
-          increase: ts2024Salary - salary,
+          salary: year === 2023 ? baseSalary : newSalary,
+          increase: year === 2023 ? 0 : newSalary - baseSalary,
         });
       }
-    }
+      return { years, newSalary, increase: newSalary - baseSalary };
+    };
 
-    const dtYears: YearlyData[] = [];
-    const dt2024Salary = salary * 1.06;
-    for (let year = 2023; year <= 2026; year++) {
-      if (year === 2023) {
-        dtYears.push({
-          year,
-          salary,
-          increase: 0,
-        });
-      } else {
-        dtYears.push({
-          year,
-          salary: dt2024Salary,
-          increase: dt2024Salary - salary,
-        });
-      }
-    }
+    const ts = generateYearlyData(salary, 1.04); // T-Systems 4%
+    const dt = generateYearlyData(salary, 1.06); // DT 6%
 
-    const tsystemsIncrease = salary * 0.04;
-    const dtIncrease = salary * 0.06;
-    const differenceIncrease = dtIncrease - tsystemsIncrease;
-    const totalDifference2026 = differenceIncrease * 3;
+    const differenceIncrease = dt.increase - ts.increase;
 
-    this.result.set({
+    return {
       salary2023: salary,
       tsystems: {
-        increase: tsystemsIncrease,
-        newSalary: ts2024Salary,
+        increase: ts.increase,
+        newSalary: ts.newSalary,
         percent: 4,
-        yearlyData: tsystemsYears,
-        totalIncrease2023to2026: tsystemsYears[3].salary - salary,
+        yearlyData: ts.years,
+        totalIncrease2023to2026: ts.increase, // V tvé logice se od 2024 plat nemění
       },
       dt: {
-        increase: dtIncrease,
-        newSalary: dt2024Salary,
+        increase: dt.increase,
+        newSalary: dt.newSalary,
         percent: 6,
-        yearlyData: dtYears,
-        totalIncrease2023to2026: dtYears[3].salary - salary,
+        yearlyData: dt.years,
+        totalIncrease2023to2026: dt.increase,
       },
       difference: differenceIncrease,
-      totalDifference2026,
-    });
-  }
+      totalDifference2026: differenceIncrease * 3, // 2024, 2025, 2026
+    };
+  });
+
 
   resetForm(): void {
-    this.salary2023.set(null);
-    this.result.set(null);
+   
   }
 }
