@@ -108,7 +108,7 @@ export class CalculatorPageComponent implements OnInit {
           if (month === 1) {
             currentState.tsi -= 1550;
             currentState.different += 1550;
-          } else if (month === 9) {
+          } else if (month === 8) {
             currentState.tsi += 190;
             currentState.TsiNote = 'Erhöhung 190 €';
             currentState.DTENote = 'Erhöhung 190 €';
@@ -116,7 +116,9 @@ export class CalculatorPageComponent implements OnInit {
         } else if (year === 2026) {
           if (month === 6) {
             currentState.tsi += this.defaultSalary() * 0.04;
-            currentState.different -= 149.6;
+            currentState.different -= this.defaultSalary() * 0.04;
+
+            // currentState.different -= 149.6;
             currentState.TsiNote = 'Erhöhug 4%';
           }
         }

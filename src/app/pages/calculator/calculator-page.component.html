@@ -29,10 +29,10 @@
 
       <app-statistic-card
         [config]="{
-          label: 'Verlust TSI-MAs durch Gehaltsentwicklung bis 2026',
-          value: calculateSalaryLossIn2026TSI().toFixed(2),
-          icon: 'account_balance_wallet',
-          cssClass: 'warning',
+          label: 'Mein Gehalt heute (Telekom)',
+          value: calculateSalaryIn2026DTE(),
+          icon: 'account_balance',
+          cssClass: 'gold',
           suffix: '€',
         }"
         [isLoading]="isLoading()"
@@ -40,10 +40,10 @@
 
       <app-statistic-card
         [config]="{
-          label: 'Mein Gehalt heute (Telekom)',
-          value: calculateSalaryIn2026DTE(),
-          icon: 'account_balance',
-          cssClass: 'gold',
+          label: 'Verlust TSI-MAs durch Gehaltsentwicklung bis 2026',
+          value: calculateSalaryLossIn2026TSI().toFixed(2),
+          icon: 'account_balance_wallet',
+          cssClass: 'warning',
           suffix: '€',
         }"
         [isLoading]="isLoading()"
