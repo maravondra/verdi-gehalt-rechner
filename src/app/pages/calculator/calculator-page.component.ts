@@ -33,7 +33,7 @@ interface ComparisonResult {
   selector: 'app-calculator-page',
   imports: [FormsModule, RouterLink, DecimalPipe],
   templateUrl: './calculator-page.component.html',
-  styleUrl: './calculator-page.component.css',
+  styleUrl: './calculator-page.component.scss', // <-- Zde: styleUrl místo styleUrls a bez hranatých závorek []
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalculatorPageComponent {
