@@ -1,0 +1,21 @@
+<div class="stat-card" [class]="config().cssClass" [class.is-loading]="isLoading()">
+
+  @if (isLoading()) {
+    <!-- Skeleton struktura kopíruje reálný layout -->
+    <div class="skeleton-icon"></div>
+    <div class="stat-content">
+      <div class="skeleton-label"></div>
+      <div class="skeleton-value"></div>
+    </div>
+  } @else {
+    <!-- Reálná data -->
+    <mat-icon>{{ config().icon }}</mat-icon>
+    <div class="stat-content">
+      <span class="label">{{ config().label }}</span>
+      <span class="value">
+         {{ config().value }}{{ config().suffix ? ' ' + config().suffix : '' }}
+      </span>
+    </div>
+  }
+
+</div>
