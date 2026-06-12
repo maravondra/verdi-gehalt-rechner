@@ -135,14 +135,28 @@
   }
 
   &.warning {
-    border-left-color: #f59e0b; // Amber-500 (Jasný, čitelný varovný tón)
+    border-left: 4px solid #d97706; // Silnější levý okraj
+    background-color: rgba(#f59e0b, 0.15); // Výraznější podbarvení celého bloku
+    animation: attention-pulse 2s infinite ease-in-out; // Jemné pulzování, aby to křičelo
 
     .icon-wrapper {
-      background-color: rgba(#f59e0b, 0.1); // 10% průhlednost pro jemný podbarv
+      background-color: #d97706; // Plná, sytá barva na pozadí ikony
     }
 
     mat-icon {
-      color: #d97706; // Amber-600 (O něco tmavší odstín, aby ikona splňovala WCAG kontrast)
+      color: #ffffff; // Bílá ikona na tmavém pozadí, extrémní kontrast
+    }
+  }
+
+  // Animace, která jemně mění stín a podbarvení, takže si toho oko hned všimne
+  @keyframes attention-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(#f59e0b, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 12px 4px rgba(#f59e0b, 0.2);
+      background-color: rgba(#f59e0b, 0.22); // Zintenzivnění podbarvení v půlce cyklu
     }
   }
 }
