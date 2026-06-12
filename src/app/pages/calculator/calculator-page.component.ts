@@ -56,7 +56,7 @@ export class CalculatorPageComponent implements OnInit {
     // Simulace asynchronního načítání dat (např. z API) po dobu 5 sekund
     setTimeout(() => {
       this.isLoading.set(false);
-    }, 2500); // 5000 milisekund = 5 sekund
+    }, 500); // 5000 milisekund = 5 sekund
   }
 
   calculateSalaryLossIn2026TSI(): number {
@@ -65,11 +65,6 @@ export class CalculatorPageComponent implements OnInit {
       totaDif += row.different;
     });
     return totaDif;
-
-    // let salaryInJuli2024 = this.defaultSalary() + this.inflationPremie;
-    // let salaryInOktober2024 = salaryInJuli2024 + salaryInJuli2024 * this.rateTSystem;
-    // let salaryInAugust2025 = salaryInOktober2024 + this.increaseSallary;
-    // return salaryInAugust2025;
   }
 
   calculateSalaryIn2026DTE(): number {
