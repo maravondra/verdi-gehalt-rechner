@@ -29,8 +29,8 @@
 
       <app-statistic-card
         [config]="{
-          label: 'Mein Gehalt heute (T-System)',
-          value: calculateSalaryIn2026TSI().toString(),
+          label: 'Verlust für TSI-Mitarbeiter',
+          value: calculateSalaryLossIn2026TSI().toFixed(2),
           icon: 'account_balance_wallet',
           cssClass: 'warning',
           suffix: '€',
@@ -41,7 +41,7 @@
       <app-statistic-card
         [config]="{
           label: 'Mein Gehalt heute (Telekom)',
-          value: calculateSalaryIn2026DTE().toString(),
+          value: calculateSalaryIn2026DTE(),
           icon: 'account_balance',
           cssClass: 'gold',
           suffix: '€',

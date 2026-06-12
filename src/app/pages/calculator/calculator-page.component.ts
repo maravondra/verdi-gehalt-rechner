@@ -56,11 +56,17 @@ export class CalculatorPageComponent implements OnInit {
     }, 2500); // 5000 milisekund = 5 sekund
   }
 
-  calculateSalaryIn2026TSI(): number {
-    let salaryInJuli2024 = this.defaultSalary() + this.inflationPremie;
-    let salaryInOktober2024 = salaryInJuli2024 + salaryInJuli2024 * this.rateTSystem;
-    let salaryInAugust2025 = salaryInOktober2024 + this.increaseSallary;
-    return salaryInAugust2025;
+  calculateSalaryLossIn2026TSI(): number {
+    let totaDif = 0;
+    this.timelineData().forEach((row) => {
+      totaDif += row.different;
+    });
+    return totaDif;
+
+    // let salaryInJuli2024 = this.defaultSalary() + this.inflationPremie;
+    // let salaryInOktober2024 = salaryInJuli2024 + salaryInJuli2024 * this.rateTSystem;
+    // let salaryInAugust2025 = salaryInOktober2024 + this.increaseSallary;
+    // return salaryInAugust2025;
   }
 
   calculateSalaryIn2026DTE(): number {
@@ -87,9 +93,11 @@ export class CalculatorPageComponent implements OnInit {
         if (year === 2024) {
           if (month === 7) {
             currentState.different += 1550;
-            note = '+1.550 €';
-          } else if (month === 9) {
-            currentState.different += (currentState.tsi + currentState.different) * 0.06;
+            note = '+1.550 € f';
+          } else if (month === 8) {
+            currentState.different -= 1550;
+          } else if (month === 10) {
+            currentState.different += this.defaultSalary() * 0.06;
             note = '6%';
           } else if (month === 12) {
             currentState.tsi += 1550;
@@ -97,17 +105,16 @@ export class CalculatorPageComponent implements OnInit {
             note = 'Přesun do TSI';
           }
         } else if (year === 2025) {
-          if (month === 8) {
+          if (month === 1) {
+            currentState.tsi -= 1550;
+            currentState.different += 1550;
+          } else if (month === 9) {
             currentState.tsi += 190;
-            currentState.different -= 190;
-            note = '190';
-          } else if (month === 10) {
-            currentState.different += 190;
             note = '190 €';
           }
         } else if (year === 2026) {
           if (month === 6) {
-            currentState.tsi += 150;
+            currentState.tsi += this.defaultSalary() * 0.04;
             currentState.different -= 149.6;
             note = '4%';
           }
