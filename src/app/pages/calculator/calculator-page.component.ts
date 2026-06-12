@@ -4,6 +4,12 @@ import { RouterLink } from '@angular/router';
 import { StatisticCardComponent } from '../statistic-card/statistic-card.component';
 import { CurrencyPipe } from '@angular/common';
 
+interface YearlyGroup {
+  year: number;
+  totalDifferent: number;
+  months: TimelineRow[];
+}
+
 export interface TimelineRow {
   year: number;
   month: number;
@@ -60,36 +66,25 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   // Reaktivní výpočet celé tabulky pomocí Angular Signals
+  // 1. Původní lineární výpočet měsíců (zůstává stejný)
   readonly timelineData = computed<TimelineRow[]>(() => {
     const data: TimelineRow[] = [];
+    let currentState: MetricState = { tsi: this.defaultSalary(), different: 0 };
 
-    // Inicializace stavu, který budeme v čase mutovat pro účely simulace
-    let currentState: MetricState = {
-      tsi: this.defaultSalary(),
-      different: 0,
-    };
-
-    const startYear = 2024;
-    const endYear = 2026;
-
-    for (let year = startYear; year <= endYear; year++) {
+    for (let year = 2024; year <= 2026; year++) {
       for (let month = 1; month <= 12; month++) {
         let note = '';
-
-        // Aplikace modifikátorů na základě konkrétního roku a měsíce
         if (year === 2024) {
           if (month === 7) {
             currentState.different += 1550;
             note = '+1.550 €';
           } else if (month === 9) {
-            const currentDt = currentState.tsi + currentState.different;
-            const increase = currentDt * 0.06; // 6% z celkového DT
-            currentState.different += increase;
+            currentState.different += (currentState.tsi + currentState.different) * 0.06;
             note = '6%';
           } else if (month === 12) {
             currentState.tsi += 1550;
             currentState.different -= 1550;
-            note = 'Přesun 1.550 € do TSI';
+            note = 'Přesun do TSI';
           }
         } else if (year === 2025) {
           if (month === 8) {
@@ -102,31 +97,45 @@ export class CalculatorPageComponent implements OnInit {
           }
         } else if (year === 2026) {
           if (month === 6) {
-            // 4% navýšení ze základu TSI (3740 * 0.04 = 149.6)
-            // V tabulce: TSI stoupne o 150 (zaokrouhleno) z 3740 na 3890
-            // Different klesne o 149.6 (z 213 na 63.4)
             currentState.tsi += 150;
             currentState.different -= 149.6;
             note = '4%';
           }
         }
 
-        // Zaokrouhlení na 2 desetinná místa pro eliminaci JS float nepřesností
         const finalTsi = Math.round(currentState.tsi * 100) / 100;
         const finalDifferent = Math.round(currentState.different * 100) / 100;
         const finalDt = Math.round((finalTsi + finalDifferent) * 100) / 100;
 
-        data.push({
-          year,
-          month,
-          tsi: finalTsi,
-          different: finalDifferent,
-          dt: finalDt,
-          note,
-        });
+        data.push({ year, month, tsi: finalTsi, different: finalDifferent, dt: finalDt, note });
       }
     }
-
     return data;
+  });
+
+  // 2. NOVÝ: Seskupení podle let a výpočet roční sumy "Different"
+  readonly yearlySummary = computed<YearlyGroup[]>(() => {
+    const monthsData = this.timelineData();
+    const groupsMap = new Map<number, TimelineRow[]>();
+
+    // Rozřazení měsíců do mapy podle let
+    monthsData.forEach((row) => {
+      if (!groupsMap.has(row.year)) {
+        groupsMap.set(row.year, []);
+      }
+      groupsMap.get(row.year)!.push(row);
+    });
+
+    // Transformace mapy na pole s výpočtem sumy
+    return Array.from(groupsMap.entries()).map(([year, months]) => {
+      // Sečteme sloupec 'different' pro daný rok
+      const totalDifferent = months.reduce((sum, row) => sum + row.different, 0);
+
+      return {
+        year,
+        totalDifferent: Math.round(totalDifferent * 100) / 100, // ošetření float nepřesnosti
+        months,
+      };
+    });
   });
 }
