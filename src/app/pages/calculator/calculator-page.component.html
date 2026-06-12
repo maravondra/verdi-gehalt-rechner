@@ -1,16 +1,53 @@
-
-  <header class="header">
-    <div class="header-content">
-      <div class="logo-section">
-        <div class="logo-badge">
-          <span class="logo-verdi">VERDI</span>
-        </div>
-        <span class="logo-text">Gehalt Rechner</span>
+<header class="header">
+  <div class="header-content">
+    <div class="logo-section">
+      <div class="logo-badge">
+        <span class="logo-verdi">VERDI</span>
       </div>
-      <nav class="nav">
-        <a routerLink="/" class="nav-link">Startseite</a>
-        <a href="https://www.verdi.de/" target="_blank" rel="noreferrer" class="nav-link">Verdi</a>
-      </nav>
+      <span class="logo-text">Gehalt Rechner</span>
     </div>
-  </header>
+    <nav class="nav">
+      <a routerLink="/" class="nav-link">Startseite</a>
+      <a href="https://www.verdi.de/" target="_blank" rel="noreferrer" class="nav-link">Verdi</a>
+    </nav>
+  </div>
+</header>
 
+<div>
+  <div class="row-statistic-container">
+    <div class="stat-grid">
+      <app-statistic-card
+        [config]="{
+          label: 'Mein Gehalt in 2024',
+          value: defaultSalary(),
+          icon: 'settings_backup_restore',
+          cssClass: 'emerald',
+          suffix: '€',
+        }"
+        [isLoading]="isLoading()"
+      />
+
+      <app-statistic-card
+        [config]="{
+          label: 'Mein Gehalt heute (T-System)',
+          value: 10,
+          icon: 'account_balance_wallet',
+          cssClass: 'warning',
+          suffix: '€',
+        }"
+        [isLoading]="isLoading()"
+      />
+
+      <app-statistic-card
+        [config]="{
+          label: 'Mein Gehalt heute (Telekom)',
+          value: 10,
+          icon: 'account_balance',
+          cssClass: 'gold',
+          suffix: '€',
+        }"
+        [isLoading]="isLoading()"
+      />
+    </div>
+  </div>
+</div>

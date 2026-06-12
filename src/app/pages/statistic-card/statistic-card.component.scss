@@ -1,0 +1,197 @@
+@use '../../../styles/colors' as *;
+@use '../../../styles/variables' as *;
+@use '../../../styles/dimensions' as *;
+
+// --- KONTEJNER PRO MŘÍŽKU ---
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: $space-4;
+  margin-bottom: $space-5;
+}
+
+// --- ZÁKLADNÍ KARTA (Default: Blue) ---
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  padding: $space-5;
+  background: $color-bg-surface;
+  border-radius: $space-3;
+  box-shadow: 0 2px 8px rgba($color-neutral-900, 0.05);
+  border: 1px solid $color-neutral-100;
+
+  // DEFAULTNÍ MODRÝ AKCENT
+  border-left: 4px solid $color-blue-primary;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover:not(.is-loading) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($color-neutral-900, 0.1);
+  }
+
+  // Ikona s modrým pozadím (Default)
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $space-2;
+    border-radius: $space-2;
+    background-color: rgba($color-blue-primary, 0.1);
+  }
+
+  mat-icon {
+    font-size: $circle-small;
+    width: $circle-small;
+    height: $circle-small;
+    color: $color-blue-primary;
+  }
+
+  // Obsahová část
+  .stat-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .label {
+      color: $color-neutral-600;
+      font-size: $font-size-small;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+      display: block;
+    }
+
+    .value {
+      font-size: $font-size-large;
+      font-weight: bold;
+      color: $color-neutral-900;
+      line-height: 1.2;
+    }
+  }
+
+  // --- VARIANTY PRO PŘEPSÁNÍ DEFAUTNÍ MODRÉ ---
+
+  &.emerald {
+    border-left-color: #10b981;
+
+    .icon-wrapper {
+      background-color: rgba(#10b981, 0.1);
+    }
+
+    mat-icon {
+      color: #10b981;
+    }
+  }
+
+  &.purple {
+    border-left-color: $color-primary-700;
+
+    .icon-wrapper {
+      background-color: rgba($color-primary-700, 0.1);
+    }
+
+    mat-icon {
+      color: $color-primary-700;
+    }
+  }
+
+  &.neutral {
+    border-left-color: $color-neutral-600;
+
+    .icon-wrapper {
+      background-color: rgba($color-neutral-600, 0.1);
+    }
+
+    mat-icon {
+      color: $color-neutral-600;
+    }
+  }
+
+  &.gold {
+    border-left-color: $color-money;
+
+    .icon-wrapper {
+      background-color: rgba($color-money, 0.1);
+    }
+
+    mat-icon {
+      color: $color-money;
+    }
+  }
+
+  &.teal {
+    border-left-color: #0d9488; // Teal-600
+
+    .icon-wrapper {
+      background-color: rgba(#0d9488, 0.1);
+    }
+
+    mat-icon {
+      color: #0d9488;
+    }
+  }
+
+  &.warning {
+    border-left-color: #f59e0b; // Amber-500 (Jasný, čitelný varovný tón)
+
+    .icon-wrapper {
+      background-color: rgba(#f59e0b, 0.1); // 10% průhlednost pro jemný podbarv
+    }
+
+    mat-icon {
+      color: #d97706; // Amber-600 (O něco tmavší odstín, aby ikona splňovala WCAG kontrast)
+    }
+  }
+}
+
+// --- SKELETON ANIMACE & STAV ---
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-base {
+  background: #eee;
+  background: linear-gradient(90deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 4px;
+}
+
+.stat-card.is-loading {
+  pointer-events: none;
+  border-left-color: $color-neutral-100;
+
+  .icon-wrapper {
+    background: transparent;
+    padding: 0;
+  }
+
+  .skeleton-icon {
+    @extend .skeleton-base;
+    width: $circle-small;
+    height: $circle-small;
+    border-radius: 50%;
+  }
+
+  .skeleton-label {
+    @extend .skeleton-base;
+    width: 80px;
+    height: 12px;
+    margin-bottom: 4px;
+  }
+
+  .skeleton-value {
+    @extend .skeleton-base;
+    width: 60px;
+    height: 20px;
+  }
+}
