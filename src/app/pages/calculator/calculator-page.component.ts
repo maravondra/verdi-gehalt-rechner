@@ -99,7 +99,7 @@ export class CalculatorPageComponent implements OnInit {
             currentState.different -= 1550;
           } else if (month === 10) {
             currentState.different += this.defaultSalary() * 0.06;
-            currentState.DTENote = 'Erhöhug 6%';
+            currentState.DTENote = 'Erhöhung 6%';
           } else if (month === 12) {
             currentState.tsi += 1550;
             currentState.different -= 1550;
@@ -115,12 +115,12 @@ export class CalculatorPageComponent implements OnInit {
             currentState.DTENote = 'Erhöhung 190 €';
           }
         } else if (year === 2026) {
-          if (month === 6) {
+          if (month === 8) {
             currentState.tsi += this.defaultSalary() * 0.04;
             currentState.different -= this.defaultSalary() * 0.04;
 
             // currentState.different -= 149.6;
-            currentState.TsiNote = 'Erhöhug 4%';
+            currentState.TsiNote = 'Erhöhung 4%';
           }
         }
 
