@@ -1,0 +1,532 @@
+// --- PROMĚNNÉ ---
+$verdi-red: #e31c23;
+$telekom-magenta: #e20074;
+$dark-gray: #333333;
+$light-gray: #f5f5f5;
+$border-gray: #dddddd;
+$text-primary: #2b2b2b;
+$text-secondary: #666666;
+$success: #00a651;
+$warning: #ff9800;
+
+// Gradienty
+$primary-gradient: linear-gradient(135deg, $verdi-red 0%, $telekom-magenta 100%);
+
+// --- GLOBÁLNÍ STYLY ---
+:host {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: block;
+  background-color: #ffffff;
+  color: $text-primary;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+// Typografie
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  color: $dark-gray;
+}
+
+h2 {
+  font-size: 1.75rem;
+  color: $dark-gray;
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  color: $verdi-red;
+}
+
+p {
+  margin: 0;
+  color: $text-secondary;
+  line-height: 1.6;
+}
+
+// --- KOMPONENTY & LAYOUT ---
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background: $primary-gradient;
+  color: white;
+  padding: 1.5rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.logo {
+  &-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  &-badge {
+    background: white;
+    color: $verdi-red;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    font-weight: 900;
+    font-size: 0.85rem;
+  }
+
+  &-verdi {
+    letter-spacing: 0.1em;
+  }
+
+  &-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+
+  &-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.main-content {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+// Hero sekce
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 4rem;
+  padding: 3rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba($verdi-red, 0.05) 0%, rgba($telekom-magenta, 0.05) 100%);
+
+  &-content h1 {
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, $verdi-red 0%, $telekom-magenta 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  &-subtitle {
+    font-size: 1.1rem;
+    color: $text-secondary;
+    line-height: 1.8;
+  }
+
+  &-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-badge {
+    font-size: 5rem;
+    animation: float 3s ease-in-out infinite;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+// Kalkulačka
+.calculator-section {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.calculator-card,
+.results-card {
+  background: white;
+  border: 1px solid $border-gray;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  h2 {
+    border-bottom: 2px solid $verdi-red;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+// Formuláře
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: $text-primary;
+    font-size: 0.95rem;
+  }
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid $border-gray;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $verdi-red;
+    box-shadow: 0 0 0 3px rgba($verdi-red, 0.1);
+  }
+}
+
+// Tlačítka
+.btn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+
+  &-primary {
+    @extend .btn;
+    background: $primary-gradient;
+    color: white;
+    border: none;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($verdi-red, 0.3);
+    }
+  }
+
+  &-secondary {
+    @extend .btn;
+    background: $light-gray;
+    color: $text-primary;
+    border: 1px solid $border-gray;
+
+    &:hover {
+      transform: translateY(-2px);
+      background: $border-gray;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// Výsledky
+.result {
+  &-item {
+    margin-bottom: 2rem;
+  }
+
+  &-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  &-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+
+    &.verdi {
+      color: $verdi-red;
+    }
+    &.telekom {
+      color: $telekom-magenta;
+    }
+    &.warning {
+      color: $warning;
+    }
+  }
+
+  &-bar {
+    height: 12px;
+    background: $light-gray;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+
+  &-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.3s ease;
+
+    &.verdi {
+      background: linear-gradient(90deg, $verdi-red 0%, #ff6b6b 100%);
+    }
+    &.telekom {
+      background: linear-gradient(90deg, $telekom-magenta 0%, #ff88bb 100%);
+    }
+  }
+}
+
+.salary-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
+// Porovnání
+.yearly-comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.year {
+  &-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  &-header {
+    background: $primary-gradient;
+    color: white;
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  &-increase {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $success;
+    background: rgba($success, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  &-diff {
+    background: rgba($warning, 0.1);
+    color: $warning;
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba($warning, 0.2);
+  }
+}
+
+.company {
+  &-comparison {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  &-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $text-secondary;
+    margin-bottom: 0.5rem;
+  }
+
+  &-data {
+    padding: 0.75rem;
+    border-radius: 6px;
+    text-align: center;
+
+    .salary {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    &.ts {
+      background: rgba($telekom-magenta, 0.05);
+      border: 1px solid rgba($telekom-magenta, 0.2);
+      .salary {
+        color: $telekom-magenta;
+      }
+    }
+
+    &.dt {
+      background: rgba($verdi-red, 0.05);
+      border: 1px solid rgba($verdi-red, 0.2);
+      .salary {
+        color: $verdi-red;
+      }
+    }
+  }
+}
+
+// Dopady (Impact)
+.daily-impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.impact {
+  &-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+    border: 2px solid transparent;
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: $warning;
+    }
+  }
+
+  &-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: $text-secondary;
+    margin-bottom: 0.5rem;
+  }
+
+  &-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $warning;
+    margin-bottom: 0.5rem;
+  }
+
+  &-subtext {
+    font-size: 0.85rem;
+    color: $text-secondary;
+    font-weight: 500;
+  }
+}
+
+// Footer
+.footer {
+  background: $dark-gray;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  margin-top: auto;
+
+  p {
+    margin-bottom: 1rem;
+    color: white;
+  }
+
+  &-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+
+    a {
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+// --- RESPONSIVITA (Media Queries) ---
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+  }
+
+  .calculator-section {
+    grid-template-columns: 1fr;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .main-content {
+    padding: 1.5rem;
+  }
+}

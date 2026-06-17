@@ -4,7 +4,7 @@
       <div class="logo-badge">
         <span class="logo-verdi">VERDI</span>
       </div>
-      <span class="logo-text">Gehalt Rechner</span>
+      <span class="logo-text">Gehaltsrechner</span>
     </div>
     <nav class="nav">
       <a routerLink="/" class="nav-link">Startseite</a>
@@ -18,7 +18,8 @@
     <div class="stat-grid">
       <app-statistic-card
         [config]="{
-          label: 'Unterschied zwischen Telekom und TSI (2026)',
+          label:
+            'Gehaltsunterschied 2026 zwischen Telekom und T-Systems bei gleichem Ausgangsgehalt 2023',
           value: calculateSalaryIn2026DTE(),
           icon: 'settings_backup_restore',
           cssClass: 'emerald',
@@ -26,10 +27,11 @@
         }"
         [isLoading]="isLoading()"
       />
-      
+
       <app-statistic-card
         [config]="{
-          label: 'kumulativer Verlust TSI durch Gehaltsentwicklung bis 2026',
+          label:
+            'Kumulativer Verlust T-Systems durch unterschiedliche Gehaltsentwicklung 2023 – 2026',
           value: calculateSalaryLossIn2026TSI().toFixed(2),
           icon: 'account_balance_wallet',
           cssClass: 'warning',
@@ -93,7 +95,7 @@
                 <th style="padding: 8px; text-align: center; width: 80px">Monat</th>
                 <th style="padding: 8px">Differenz</th>
                 <th style="padding: 8px">T-Sytems</th>
-                <th style="padding: 8px">Deutechs Telekom</th>
+                <th style="padding: 8px">Deutsche Telekom</th>
                 <th style="padding: 8px; text-align: left; padding-left: 20px">Notiz</th>
               </tr>
             </thead>

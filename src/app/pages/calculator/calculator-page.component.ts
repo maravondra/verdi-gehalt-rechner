@@ -41,7 +41,7 @@ export interface MetricState {
 })
 export class CalculatorPageComponent implements OnInit {
   isLoading = signal(false);
-  readonly defaultSalary = signal<number>(history.state?.salary ?? 0);
+  readonly defaultSalary = signal<number>((history.state?.salary ?? 0) / 12);
 
   private readonly rateTSystem = 0.04; // 15% Gehaltserhöhung für T-System
   private readonly rateTelekom = 0.06; // 10% Gehaltserhöhung für Telekom
