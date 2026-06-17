@@ -41,7 +41,7 @@ export interface MetricState {
 })
 export class CalculatorPageComponent implements OnInit {
   isLoading = signal(false);
-  readonly defaultSalary = signal<number>(history.state?.salary ?? 0);
+  readonly defaultSalary = signal<number>((history.state?.salary ?? 0) / 12);
 
   private readonly rateTSystem = 0.04; // 15% Gehaltserhöhung für T-System
   private readonly rateTelekom = 0.06; // 10% Gehaltserhöhung für Telekom
@@ -72,7 +72,7 @@ export class CalculatorPageComponent implements OnInit {
     // let salaryInOktober2024 = salaryInJuli2024 + salaryInJuli2024 * this.rateTelekom;
     // let salaryInAugust2025 = salaryInOktober2024 + this.increaseSallary;
     // return salaryInAugust2025;
-    return this.defaultSalary() * 1.06 - this.defaultSalary() * 1.04;
+    return (this.defaultSalary() / 12) * 1.06 - (this.defaultSalary() / 12) * 1.04;
   }
 
   createDate(year: number, month: number): Date {
@@ -99,7 +99,7 @@ export class CalculatorPageComponent implements OnInit {
             currentState.different -= 1550;
           } else if (month === 10) {
             currentState.different += this.defaultSalary() * 0.06;
-            currentState.DTENote = 'Erhöhug 6%';
+            currentState.DTENote = 'Erhöhung 6%';
           } else if (month === 12) {
             currentState.tsi += 1550;
             currentState.different -= 1550;
@@ -115,12 +115,12 @@ export class CalculatorPageComponent implements OnInit {
             currentState.DTENote = 'Erhöhung 190 €';
           }
         } else if (year === 2026) {
-          if (month === 6) {
+          if (month === 8) {
             currentState.tsi += this.defaultSalary() * 0.04;
             currentState.different -= this.defaultSalary() * 0.04;
 
             // currentState.different -= 149.6;
-            currentState.TsiNote = 'Erhöhug 4%';
+            currentState.TsiNote = 'Erhöhung 4%';
           }
         }
 

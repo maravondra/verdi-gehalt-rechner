@@ -6,12 +6,11 @@ import { Router, RouterLink } from '@angular/router';
   selector: 'app-home-page',
   imports: [RouterLink, FormsModule],
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css',
+  styleUrl: './home-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent {
-
-  router = inject(Router)
+  router = inject(Router);
 
   resetForm() {
     throw new Error('Method not implemented.');
@@ -20,5 +19,4 @@ export class HomePageComponent {
     this.router.navigate(['/rechner'], { state: { salary: this.salary2023() } });
   }
   salary2023 = signal<number | null>(null);
-
 }

@@ -4,7 +4,7 @@
       <div class="logo-badge">
         <span class="logo-verdi">VERDI</span>
       </div>
-      <span class="logo-text">Gehalt Rechner</span>
+      <span class="logo-text">Gehaltsrechner</span>
     </div>
     <nav class="nav">
       <a routerLink="/" class="nav-link">Startseite</a>
@@ -18,7 +18,8 @@
     <div class="stat-grid">
       <app-statistic-card
         [config]="{
-          label: 'Unterschied zwischen Telekom und TSI (2026)',
+          label:
+            'Gehaltsunterschied 2026 zwischen Telekom und T-Systems bei gleichem Ausgangsgehalt 2023',
           value: calculateSalaryIn2026DTE(),
           icon: 'settings_backup_restore',
           cssClass: 'emerald',
@@ -26,10 +27,11 @@
         }"
         [isLoading]="isLoading()"
       />
-      
+
       <app-statistic-card
         [config]="{
-          label: 'kumulativer Verlust TSI durch Gehaltsentwicklung bis 2026',
+          label:
+            'Kumulativer Verlust T-Systems durch unterschiedliche Gehaltsentwicklung 2023 – 2026',
           value: calculateSalaryLossIn2026TSI().toFixed(2),
           icon: 'account_balance_wallet',
           cssClass: 'warning',
@@ -91,10 +93,9 @@
             <thead>
               <tr style="color: #64748b; border-bottom: 2px solid #cbd5e1; font-size: 0.9em">
                 <th style="padding: 8px; text-align: center; width: 80px">Monat</th>
+                <th style="padding: 8px">Monatlicher Gehalt (Deutsche Telekom)</th>
+                <th style="padding: 8px">Monatlicher Gehalt (T-Systems)</th>
                 <th style="padding: 8px">Differenz</th>
-                <th style="padding: 8px">T-Sytems</th>
-                <th style="padding: 8px">Deutechs Telekom</th>
-                <th style="padding: 8px; text-align: left; padding-left: 20px">Notiz</th>
               </tr>
             </thead>
             <tbody>
@@ -107,8 +108,11 @@
                   <td style="padding: 10px; text-align: center; color: #64748b; font-weight: 500">
                     {{ createDate(row.year, row.month) | date: 'LLLL' : '' : 'de-DE' }}
                   </td>
-                  <td style="padding: 10px; color: #ef4444; font-weight: 500">
-                    {{ row.different | currency: 'EUR' : 'symbol' : '1.2-2' }}
+                  <td style="padding: 10px; color: #0f172a; font-weight: 600">
+                    @if (row.DTENote) {
+                      <span class="badge badge-danger">{{ row.DTENote }}</span>
+                    }
+                    {{ row.dt | currency: 'EUR' : 'symbol' : '1.2-2' }}
                   </td>
                   <td style="padding: 10px; color: #334155">
                     @if (row.TsiNote) {
@@ -116,11 +120,20 @@
                     }
                     {{ row.tsi | currency: 'EUR' : 'symbol' : '1.2-2' }}
                   </td>
-                  <td style="padding: 10px; color: #0f172a; font-weight: 600">
-                    @if (row.DTENote) {
-                      <span class="badge badge-danger">{{ row.DTENote }}</span>
-                    }
-                    {{ row.dt | currency: 'EUR' : 'symbol' : '1.2-2' }}
+                  <td
+                    class="p-2.5 font-medium"
+                    [ngClass]="
+                      row.different > 0
+                        ? 'text-red-500'
+                        : row.different < 0
+                          ? 'text-green-500'
+                          : 'text-black'
+                    "
+                  >
+                    {{
+                      (row.different < 0 ? row.different * -1 : row.different)
+                        | currency: 'EUR' : 'symbol' : '1.2-2'
+                    }}
                   </td>
                 </tr>
               }
