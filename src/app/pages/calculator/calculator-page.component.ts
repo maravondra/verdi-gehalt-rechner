@@ -72,7 +72,7 @@ export class CalculatorPageComponent implements OnInit {
     // let salaryInOktober2024 = salaryInJuli2024 + salaryInJuli2024 * this.rateTelekom;
     // let salaryInAugust2025 = salaryInOktober2024 + this.increaseSallary;
     // return salaryInAugust2025;
-    return this.defaultSalary() * 1.06 - this.defaultSalary() * 1.04;
+    return (this.defaultSalary() / 12) * 1.06 - (this.defaultSalary() / 12) * 1.04;
   }
 
   createDate(year: number, month: number): Date {
