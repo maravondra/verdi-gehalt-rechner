@@ -74,15 +74,20 @@
             <span style="color: #64748b; font-weight: 400">— Verlust für TSI-Mitarbeiter:</span>
           </div>
           <span
-            style="
-              font-size: 1.1em;
-              color: #ef4444;
-              background: #fee2e2;
-              padding: 4px 12px;
-              border-radius: 6px;
+            [ngClass]="
+              group.totalDifferent > 0
+                ? 'text-red-700 bg-red-100'
+                : group.totalDifferent < 0
+                  ? 'text-green-700 bg-green-100'
+                  : 'text-gray-700 bg-gray-100'
             "
+            class="inline-block px-3 py-1 rounded-md font-medium"
+            style="font-size: 1.1em"
           >
-            {{ group.totalDifferent | currency: 'EUR' : 'symbol' : '1.2-2' }}
+            {{
+              (group.totalDifferent < 0 ? group.totalDifferent * -1 : group.totalDifferent)
+                | currency: 'EUR' : 'symbol' : '1.2-2'
+            }}
           </span>
         </summary>
 
