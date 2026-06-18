@@ -104,6 +104,10 @@ export class CalculatorPageComponent implements OnInit {
             currentState.tsi += 1550;
             currentState.different -= 1550;
             currentState.TsiNote = 'Inflationsausgleichsprämie 1.550€ ';
+          } else if (month === 3) {
+            currentState.TsiNote = 'Erhöhung 2.1%';
+            currentState.tsi += this.defaultSalary() * 0.021;
+            currentState.different -= this.defaultSalary() * 0.021;
           }
         } else if (year === 2025) {
           if (month === 1) {
@@ -116,10 +120,9 @@ export class CalculatorPageComponent implements OnInit {
           }
         } else if (year === 2026) {
           if (month === 8) {
-            currentState.tsi += this.defaultSalary() * 0.04;
-            currentState.different -= this.defaultSalary() * 0.04;
-
-            // currentState.different -= 149.6;
+            let calculateIncrease = this.defaultSalary() * 1.021 * 0.04;
+            currentState.tsi += calculateIncrease;
+            currentState.different -= calculateIncrease;
             currentState.TsiNote = 'Erhöhung 4%';
           }
         }
