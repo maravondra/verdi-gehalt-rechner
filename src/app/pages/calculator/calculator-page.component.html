@@ -4,7 +4,7 @@
       <div class="logo-badge">
         <span class="logo-verdi">VERDI</span>
       </div>
-      <span class="logo-text">Gehaltsrechner</span>
+      <span class="logo-text">Gehaltsverlustsrechner</span>
     </div>
     <nav class="nav">
       <a routerLink="/" class="nav-link">Startseite</a>
@@ -19,23 +19,23 @@
       <app-statistic-card
         [config]="{
           label:
-            'Gehaltsunterschied 2026 zwischen Telekom und T-Systems bei gleichem Ausgangsgehalt 2023',
-          value: calculateSalaryIn2026DTE(),
-          icon: 'settings_backup_restore',
-          cssClass: 'emerald',
+            'Kumulativer Verlust T-Systems durch unterschiedliche Gehaltsentwicklung 2024 – 2026 seit dem letzten Tarifabschluss',
+          value: calculateSalaryLossIn2026TSI().toFixed(2),
+          icon: 'account_balance_wallet',
+          cssClass: 'warning',
           suffix: '€',
         }"
+        [isEuro]="true"
         [isLoading]="isLoading()"
       />
 
       <app-statistic-card
         [config]="{
-          label:
-            'Kumulativer Verlust T-Systems durch unterschiedliche Gehaltsentwicklung 2023 – 2026',
-          value: calculateSalaryLossIn2026TSI().toFixed(2),
-          icon: 'account_balance_wallet',
-          cssClass: 'warning',
-          suffix: '€',
+          label: 'Wieviele Gehälter sind Dir dadurch entgangen',
+          value: calculateSalaryIn2026DTE(),
+          icon: 'settings_backup_restore',
+          cssClass: 'emerald',
+          suffix: '',
         }"
         [isLoading]="isLoading()"
       />

@@ -12,8 +12,12 @@
     <div class="stat-content">
       <span class="label">{{ config().label }}</span>
       <span class="value">
-        {{ config().value | currency: 'EUR' : 'symbol' : '1.2-2' }}
+        @if (isEuro()) {
+          {{ config().value | currency: 'EUR' : 'symbol' : '1.2-2' }}
+        } @else {
+          {{ config().value | number: '1.2-2' }}
+        }
       </span>
-  </div>
+    </div>
   }
 </div>
