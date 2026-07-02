@@ -1,0 +1,13 @@
+@if (isVisible()) {
+  <div class="privacy-banner">
+    <div class="banner-content">
+      <span class="icon">🛡️</span>
+      <p>
+        <strong>Ihre Privatsphäre ist sicher:</strong> Diese Website verwendet keine
+        Tracking-Cookies und speichert die eingegebenen Daten nirgendwo. Die Berechnung erfolgt
+        anonym direkt in Ihrem Browser.
+      </p>
+    </div>
+    <button class="banner-btn" (click)="closeBanner()">Verstanden</button>
+  </div>
+}
