@@ -1,4 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -12,7 +12,7 @@ export interface StatCardConfig {
 
 @Component({
   selector: 'app-statistic-card',
-  imports: [MatIconModule, CurrencyPipe],
+  imports: [MatIconModule, CurrencyPipe, DecimalPipe],
   templateUrl: './statistic-card.component.html',
   styleUrl: './statistic-card.component.scss',
   standalone: true,
@@ -20,4 +20,5 @@ export interface StatCardConfig {
 export class StatisticCardComponent {
   config = input.required<StatCardConfig>();
   isLoading = input<boolean>(false);
+  isEuro = input<boolean>(false);
 }

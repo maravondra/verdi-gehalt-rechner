@@ -68,11 +68,7 @@ export class CalculatorPageComponent implements OnInit {
   }
 
   calculateSalaryIn2026DTE(): number {
-    // let salaryInJuli2024 = this.defaultSalary() + this.inflationPremie;
-    // let salaryInOktober2024 = salaryInJuli2024 + salaryInJuli2024 * this.rateTelekom;
-    // let salaryInAugust2025 = salaryInOktober2024 + this.increaseSallary;
-    // return salaryInAugust2025;
-    return (this.defaultSalary() / 12) * 1.06 - (this.defaultSalary() / 12) * 1.04;
+    return this.calculateSalaryLossIn2026TSI() / +this.defaultSalary();
   }
 
   createDate(year: number, month: number): Date {
@@ -86,9 +82,8 @@ export class CalculatorPageComponent implements OnInit {
     const data: TimelineRow[] = [];
     let currentState: MetricState = { tsi: this.defaultSalary(), different: 0 };
 
-    for (let year = 2024; year <= 2026; year++) {
-      for (let month = 1; month <= 12; month++) {
-        let note = '';
+    for (let year = 2024; year <= 2024; year++) {
+      for (let month = 5; month <= 12; month++) {
         currentState.TsiNote = undefined;
         currentState.DTENote = undefined;
         if (year === 2024) {
@@ -104,12 +99,31 @@ export class CalculatorPageComponent implements OnInit {
             currentState.tsi += 1550;
             currentState.different -= 1550;
             currentState.TsiNote = 'Inflationsausgleichsprämie 1.550€ ';
-          } else if (month === 3) {
-            currentState.TsiNote = 'Erhöhung 2.1%';
-            currentState.tsi += this.defaultSalary() * 0.021;
-            currentState.different -= this.defaultSalary() * 0.021;
           }
-        } else if (year === 2025) {
+        }
+
+        const finalTsi = Math.round(currentState.tsi * 100) / 100;
+        const finalDifferent = Math.round(currentState.different * 100) / 100;
+        const finalDt = Math.round((finalTsi + finalDifferent) * 100) / 100;
+
+        data.push({
+          year,
+          month,
+          tsi: finalTsi,
+          different: finalDifferent,
+          dt: finalDt,
+          TsiNote: currentState.TsiNote,
+          DTENote: currentState.DTENote,
+        });
+      }
+    }
+
+    for (let year = 2025; year <= 2026; year++) {
+      for (let month = 1; month <= 12; month++) {
+        let note = '';
+        currentState.TsiNote = undefined;
+        currentState.DTENote = undefined;
+        if (year === 2025) {
           if (month === 1) {
             currentState.tsi -= 1550;
             currentState.different += 1550;
@@ -170,4 +184,17 @@ export class CalculatorPageComponent implements OnInit {
       };
     });
   });
+
+  calulaKaufVerulust(): number {
+    let totalInflacion = 7.47;
+
+    //let monahtDefault = 9000;
+    //let monahtIn2026 = 9557.56;
+    let monahtDefault = this.defaultSalary();
+    let monahtIn2026 = (this.defaultSalary() + 190) * 1.04;
+
+    let incerese = ((monahtIn2026 - monahtDefault) / monahtDefault) * 100;
+
+    return totalInflacion - incerese;
+  }
 }
