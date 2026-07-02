@@ -39,6 +39,19 @@
         }"
         [isLoading]="isLoading()"
       />
+      <app-statistic-card
+        [config]="{
+          label: 'Kaufkraftverlust in % im Vergleich zur Inflation',
+          value: calulaKaufVerulust(),
+          icon: 'settings_backup_restore',
+          cssClass: 'emerald',
+          suffix: '%',
+        }"
+        ,
+        [isEuro]="false"
+        ,
+        [isLoading]="isLoading()"
+      />
     </div>
   </div>
 

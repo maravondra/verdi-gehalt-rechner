@@ -15,7 +15,7 @@
         @if (isEuro()) {
           {{ config().value | currency: 'EUR' : 'symbol' : '1.2-2' }}
         } @else {
-          {{ config().value | number: '1.2-2' }}
+          {{ config().value | number: '1.2-2' }} {{ config().suffix }}
         }
       </span>
     </div>

@@ -184,4 +184,17 @@ export class CalculatorPageComponent implements OnInit {
       };
     });
   });
+
+  calulaKaufVerulust(): number {
+    let totalInflacion = 7.47;
+
+    //let monahtDefault = 9000;
+    //let monahtIn2026 = 9557.56;
+    let monahtDefault = this.defaultSalary();
+    let monahtIn2026 = (this.defaultSalary() + 190) * 1.04;
+
+    let incerese = ((monahtIn2026 - monahtDefault) / monahtDefault) * 100;
+
+    return totalInflacion - incerese;
+  }
 }
