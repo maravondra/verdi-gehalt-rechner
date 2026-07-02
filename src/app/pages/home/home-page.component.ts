@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { PrivacyBanner } from '../../privacy-banner/privacy-banner';
 
 @Component({
   selector: 'app-home-page',
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, PrivacyBanner],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

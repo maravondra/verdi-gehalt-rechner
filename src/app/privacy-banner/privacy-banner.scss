@@ -1,0 +1,69 @@
+.privacy-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--banner-bg, #f8f9fa);
+  border-top: 1px solid var(--banner-border, #dee2e6);
+  color: var(--banner-text, #212529);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+  z-index: 1050;
+  box-sizing: border-box;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.banner-content p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.icon {
+  font-size: 1.3rem;
+}
+
+.banner-btn {
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.banner-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.banner-btn:active {
+  transform: scale(0.98);
+}
+
+/* Responsivní úprava */
+@media (max-width: 576px) {
+  .privacy-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .banner-content {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
