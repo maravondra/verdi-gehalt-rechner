@@ -64,7 +64,7 @@ export class CalculatorPageComponent implements OnInit {
     this.timelineData().forEach((row) => {
       totaDif += row.different;
     });
-    return totaDif;
+    return -1 * totaDif;
   }
 
   calculateSalaryIn2026DTE(): number {

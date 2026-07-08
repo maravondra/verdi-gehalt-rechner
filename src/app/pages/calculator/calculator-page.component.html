@@ -19,146 +19,183 @@
       <app-statistic-card
         [config]="{
           label:
-            'Kumulativer Verlust T-Systems durch unterschiedliche Gehaltsentwicklung 2024 – 2026 seit dem letzten Tarifabschluss',
-          value: calculateSalaryLossIn2026TSI().toFixed(2),
+            'Kumulativer Verlust T-Systems durch unterschiedliche Gehaltsentwicklung 2024 – 2026 im Vergleich zur Telekom seit dem letzten Tarifabschluss',
+          value: calculateSalaryLossIn2026TSI(),
           icon: 'account_balance_wallet',
           cssClass: 'warning',
           suffix: '€',
         }"
         [isEuro]="true"
         [isLoading]="isLoading()"
+        ,
+        [isMinusActivation]="true"
+        ,
+        [removeMinus]="true"
+        ,
+        [showIcon]="false"
       />
 
       <app-statistic-card
         [config]="{
           label: 'Wieviele Gehälter sind Dir dadurch entgangen',
           value: calculateSalaryIn2026DTE(),
-          icon: 'settings_backup_restore',
-          cssClass: 'emerald',
+          icon: 'money_off',
+          cssClass: 'gold',
           suffix: '',
         }"
         [isLoading]="isLoading()"
+        ,
+        [isMinusActivation]="true"
+        ,
+        [removeMinus]="true"
       />
       <app-statistic-card
         [config]="{
-          label: 'Kaufkraftverlust in % im Vergleich zur Inflation',
+          label: 'Realgehaltsteigerung (inklusive Inflation)',
           value: calulaKaufVerulust(),
-          icon: 'settings_backup_restore',
-          cssClass: 'emerald',
+          icon: 'trending_down',
+          cssClass: 'gold',
           suffix: '%',
         }"
         ,
         [isEuro]="false"
         ,
         [isLoading]="isLoading()"
+        ,
+        [isMinusActivation]="true"
+        ,
+        [removeMinus]="true"
       />
     </div>
   </div>
 
-  <div
-    class="ux-container"
-    style="max-width: 900px; margin: 20px auto; font-family: system-ui, sans-serif"
-  >
-    @for (group of yearlySummary(); track group.year) {
-      <details
-        style="
-          background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 8px;
-          margin-bottom: 12px;
-          overflow: hidden;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        "
-      >
-        <summary
+  @if (isLoading()) {
+    <div
+      class="ux-container"
+      style="max-width: 900px; margin: 20px auto; font-family: system-ui, sans-serif"
+    >
+      <div class="skeleton-container">
+        @for (item of [1, 2, 3]; track item) {
+          <div class="skeleton-card">
+            <div style="display: flex; align-items: center; gap: 12px">
+              <span class="skeleton-line" style="width: 45px; height: 1.2em"></span>
+              <span class="skeleton-line" style="width: 160px; height: 1em; opacity: 0.7"></span>
+            </div>
+
+            <span
+              class="skeleton-line"
+              style="width: 80px; height: 2rem; border-radius: 6px"
+            ></span>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div
+      class="ux-container"
+      style="max-width: 900px; margin: 20px auto; font-family: system-ui, sans-serif"
+    >
+      @for (group of yearlySummary(); track group.year) {
+        <details
           style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 20px;
-            font-weight: 600;
-            cursor: pointer;
-            background: #f8fafc;
-            user-select: none;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
           "
         >
-          <div style="display: flex; align-items: center; gap: 12px">
-            <span style="font-size: 1.2em; color: #1e293b">{{ group.year }}</span>
-            <span style="color: #64748b; font-weight: 400">— Verlust für TSI-Mitarbeiter:</span>
-          </div>
-          <span
-            [ngClass]="
-              group.totalDifferent > 0
-                ? 'text-red-700 bg-red-100'
-                : group.totalDifferent < 0
-                  ? 'text-green-700 bg-green-100'
-                  : 'text-gray-700 bg-gray-100'
+          <summary
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 16px 20px;
+              font-weight: 600;
+              cursor: pointer;
+              background: #f8fafc;
+              user-select: none;
             "
-            class="inline-block px-3 py-1 rounded-md font-medium"
-            style="font-size: 1.1em"
           >
-            {{
-              (group.totalDifferent < 0 ? group.totalDifferent * -1 : group.totalDifferent)
-                | currency: 'EUR' : 'symbol' : '1.2-2'
-            }}
-          </span>
-        </summary>
+            <div style="display: flex; align-items: center; gap: 12px">
+              <span style="font-size: 1.2em; color: #1e293b">{{ group.year }}</span>
+              <span style="color: #64748b; font-weight: 400">— Verlust für TSI-Mitarbeiter:</span>
+            </div>
+            <span
+              [ngClass]="
+                group.totalDifferent > 0
+                  ? 'text-red-700 bg-red-100'
+                  : group.totalDifferent < 0
+                    ? 'text-green-700 bg-green-100'
+                    : 'text-gray-700 bg-gray-100'
+              "
+              class="inline-block px-3 py-1 rounded-md font-medium"
+              style="font-size: 1.1em"
+            >
+              {{
+                (group.totalDifferent < 0 ? group.totalDifferent * -1 : group.totalDifferent)
+                  | currency: 'EUR' : 'symbol' : '1.2-2'
+              }}
+            </span>
+          </summary>
 
-        <div style="padding: 16px 20px; border-top: 1px solid #e2e8f0; background: #fff">
-          <table
-            style="width: 100%; border-collapse: collapse; text-align: right; font-size: 0.95em"
-          >
-            <thead>
-              <tr style="color: #64748b; border-bottom: 2px solid #cbd5e1; font-size: 0.9em">
-                <th style="padding: 8px; text-align: center; width: 80px">Monat</th>
-                <th style="padding: 8px">Monatlicher Gehalt (Deutsche Telekom)</th>
-                <th style="padding: 8px">Monatlicher Gehalt (T-Systems)</th>
-                <th style="padding: 8px">Differenz</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (row of group.months; track row.month) {
-                <tr
-                  style="border-bottom: 1px solid #f1f5f9"
-                  onmouseover="this.style.backgroundColor = '#f8fafc'"
-                  onmouseout="this.style.backgroundColor = 'transparent'"
-                >
-                  <td style="padding: 10px; text-align: center; color: #64748b; font-weight: 500">
-                    {{ createDate(row.year, row.month) | date: 'LLLL' : '' : 'de-DE' }}
-                  </td>
-                  <td style="padding: 10px; color: #0f172a; font-weight: 600">
-                    @if (row.DTENote) {
-                      <span class="badge badge-danger">{{ row.DTENote }}</span>
-                    }
-                    {{ row.dt | currency: 'EUR' : 'symbol' : '1.2-2' }}
-                  </td>
-                  <td style="padding: 10px; color: #334155">
-                    @if (row.TsiNote) {
-                      <span class="badge badge-danger">{{ row.TsiNote }}</span>
-                    }
-                    {{ row.tsi | currency: 'EUR' : 'symbol' : '1.2-2' }}
-                  </td>
-                  <td
-                    class="p-2.5 font-medium"
-                    [ngClass]="
-                      row.different > 0
-                        ? 'text-red-500'
-                        : row.different < 0
-                          ? 'text-green-500'
-                          : 'text-black'
-                    "
-                  >
-                    {{
-                      (row.different < 0 ? row.different * -1 : row.different)
-                        | currency: 'EUR' : 'symbol' : '1.2-2'
-                    }}
-                  </td>
+          <div style="padding: 16px 20px; border-top: 1px solid #e2e8f0; background: #fff">
+            <table
+              style="width: 100%; border-collapse: collapse; text-align: right; font-size: 0.95em"
+            >
+              <thead>
+                <tr style="color: #64748b; border-bottom: 2px solid #cbd5e1; font-size: 0.9em">
+                  <th style="padding: 8px; text-align: center; width: 80px">Monat</th>
+                  <th style="padding: 8px">Monatlicher Gehalt (Deutsche Telekom)</th>
+                  <th style="padding: 8px">Monatlicher Gehalt (T-Systems)</th>
+                  <th style="padding: 8px">Differenz</th>
                 </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-      </details>
-    }
-  </div>
+              </thead>
+              <tbody>
+                @for (row of group.months; track row.month) {
+                  <tr
+                    style="border-bottom: 1px solid #f1f5f9"
+                    onmouseover="this.style.backgroundColor = '#f8fafc'"
+                    onmouseout="this.style.backgroundColor = 'transparent'"
+                  >
+                    <td style="padding: 10px; text-align: center; color: #64748b; font-weight: 500">
+                      {{ createDate(row.year, row.month) | date: 'LLLL' : '' : 'de-DE' }}
+                    </td>
+                    <td style="padding: 10px; color: #0f172a; font-weight: 600">
+                      @if (row.DTENote) {
+                        <span class="badge badge-danger">{{ row.DTENote }}</span>
+                      }
+                      {{ row.dt | currency: 'EUR' : 'symbol' : '1.2-2' }}
+                    </td>
+                    <td style="padding: 10px; color: #334155">
+                      @if (row.TsiNote) {
+                        <span class="badge badge-danger">{{ row.TsiNote }}</span>
+                      }
+                      {{ row.tsi | currency: 'EUR' : 'symbol' : '1.2-2' }}
+                    </td>
+                    <td
+                      class="p-2.5 font-medium"
+                      [ngClass]="
+                        row.different > 0
+                          ? 'text-red-500'
+                          : row.different < 0
+                            ? 'text-green-500'
+                            : 'text-black'
+                      "
+                    >
+                      {{
+                        (row.different < 0 ? row.different * -1 : row.different)
+                          | currency: 'EUR' : 'symbol' : '1.2-2'
+                      }}
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </details>
+      }
+    </div>
+  }
 </div>
