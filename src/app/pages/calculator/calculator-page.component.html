@@ -20,37 +20,51 @@
         [config]="{
           label:
             'Kumulativer Verlust T-Systems durch unterschiedliche Gehaltsentwicklung 2024 – 2026 im Vergleich zur Telekom seit dem letzten Tarifabschluss',
-          value: calculateSalaryLossIn2026TSI().toFixed(2),
+          value: calculateSalaryLossIn2026TSI(),
           icon: 'account_balance_wallet',
           cssClass: 'warning',
           suffix: '€',
         }"
         [isEuro]="true"
         [isLoading]="isLoading()"
+        ,
+        [isMinusActivation]="true"
+        ,
+        [removeMinus]="true"
+        ,
+        [showIcon]="false"
       />
 
       <app-statistic-card
         [config]="{
           label: 'Wieviele Gehälter sind Dir dadurch entgangen',
           value: calculateSalaryIn2026DTE(),
-          icon: 'settings_backup_restore',
-          cssClass: 'emerald',
+          icon: 'money_off',
+          cssClass: 'gold',
           suffix: '',
         }"
         [isLoading]="isLoading()"
+        ,
+        [isMinusActivation]="true"
+        ,
+        [removeMinus]="true"
       />
       <app-statistic-card
         [config]="{
           label: 'Realgehaltsteigerung (inklusive Inflation)',
           value: calulaKaufVerulust(),
-          icon: 'settings_backup_restore',
-          cssClass: 'warning',
+          icon: 'trending_down',
+          cssClass: 'gold',
           suffix: '%',
         }"
         ,
         [isEuro]="false"
         ,
         [isLoading]="isLoading()"
+        ,
+        [isMinusActivation]="true"
+        ,
+        [removeMinus]="true"
       />
     </div>
   </div>

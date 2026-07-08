@@ -8,14 +8,16 @@
     </div>
   } @else {
     <!-- Reálná data -->
-    <mat-icon>{{ config().icon }}</mat-icon>
+    @if (showIcon()) {
+      <mat-icon>{{ config().icon }}</mat-icon>
+    }
     <div class="stat-content">
       <span class="label">{{ config().label }}</span>
-      <span class="value">
+      <span [class]="valueClass()">
         @if (isEuro()) {
-          {{ config().value | currency: 'EUR' : 'symbol' : '1.2-2' }}
+          {{ correctionOfValue() | currency: 'EUR' : 'symbol' : '1.2-2' }}
         } @else {
-          {{ config().value | number: '1.2-2' }} {{ config().suffix }}
+          {{ correctionOfValue() | number: '1.2-2' }} {{ config().suffix }}
         }
       </span>
     </div>
