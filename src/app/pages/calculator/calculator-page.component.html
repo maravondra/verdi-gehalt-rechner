@@ -19,7 +19,7 @@
       <app-statistic-card
         [config]="{
           label:
-            'Kumulativer Verlust T-Systems durch unterschiedliche Gehaltsentwicklung 2024 – 2026 seit dem letzten Tarifabschluss',
+            'Kumulativer Verlust T-Systems durch unterschiedliche Gehaltsentwicklung 2024 – 2026 im Vergleich zur Telekom seit dem letzten Tarifabschluss',
           value: calculateSalaryLossIn2026TSI().toFixed(2),
           icon: 'account_balance_wallet',
           cssClass: 'warning',
@@ -41,10 +41,10 @@
       />
       <app-statistic-card
         [config]="{
-          label: 'Kaufkraftverlust in % im Vergleich zur Inflation',
+          label: 'Realgehaltsteigerung (inklusive Inflation)',
           value: calulaKaufVerulust(),
           icon: 'settings_backup_restore',
-          cssClass: 'emerald',
+          cssClass: 'warning',
           suffix: '%',
         }"
         ,

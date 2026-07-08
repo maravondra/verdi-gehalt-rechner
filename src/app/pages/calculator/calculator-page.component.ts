@@ -195,6 +195,6 @@ export class CalculatorPageComponent implements OnInit {
 
     let incerese = ((monahtIn2026 - monahtDefault) / monahtDefault) * 100;
 
-    return totalInflacion - incerese;
+    return -1 * (totalInflacion - incerese);
   }
 }

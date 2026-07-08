@@ -1,0 +1,56 @@
+.impressum-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #212529;
+  line-height: 1.6;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: #343a40;
+}
+
+h3 {
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
+
+.impressum-section p {
+  margin: 0 0 1rem 0;
+}
+
+.impressum-section a {
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+.impressum-section a:hover {
+  text-decoration: underline;
+}
+
+.separator {
+  border: 0;
+  border-top: 1px solid #dee2e6;
+  margin: 3rem 0;
+}
+
+.disclaimer {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
