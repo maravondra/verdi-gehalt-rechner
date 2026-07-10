@@ -11,7 +11,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-           "style": "scss"
+          "style": "scss"
         }
       },
       "root": "",
@@ -30,7 +30,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/material-design-icons-iconfont/dist/material-design-icons.css"
             ]
           },
           "configurations": {
