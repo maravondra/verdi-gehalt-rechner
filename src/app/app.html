@@ -1,1 +1,33 @@
-<router-outlet></router-outlet>
+<div class="page-wrapper">
+  <header class="header">
+    <div class="header-content">
+      <div class="logo-section">
+        <span class="logo-verdi"> <img src="/logo.svg" alt="Verdi Logo" /> </span>
+        <span class="logo-text">Gehaltsverlustrechner</span>
+      </div>
+      <nav class="nav">
+        <a routerLink="/aaa" class="nav-link">Startseite</a>
+        <a href="https://www.verdi.de/" target="_blank" rel="noreferrer" class="nav-link"
+          >verdi.de</a
+        >
+      </nav>
+    </div>
+  </header>
+
+  <!-- Obal pro samotný obsah stránek, který flexbox roztáhne -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2026 ver.di Fachruppe IKT - OV Göppingen Transparenz bei der Gehaltsentwicklung</p>
+      <div class="footer-links">
+        <a routerLink="/impressum">Impressum</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Informační banner -->
+</div>
+<app-privacy-banner></app-privacy-banner>

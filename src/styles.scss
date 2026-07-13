@@ -39,7 +39,6 @@ body {
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these
   // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
 
@@ -54,103 +53,6 @@ body {
 // Definice SCSS proměnných (volitelné, pokud nechcete používat var(--...))
 $max-width: 1200px;
 $transition-speed: 0.3s;
-
-.header {
-  background: linear-gradient(135deg, var(--verdi-red) 0%, var(--telekom-magenta) 100%);
-  color: white;
-  padding: 1.5rem 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-  &-content {
-    max-width: $max-width;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-}
-
-.logo-section {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-weight: 700;
-  font-size: 1.2rem;
-
-  .logo-badge {
-    background: white;
-    color: var(--verdi-red);
-    padding: 0.5rem 0.75rem;
-    border-radius: 4px;
-    font-weight: 900;
-    font-size: 0.85rem;
-  }
-
-  .logo-verdi {
-    letter-spacing: 0.1em;
-  }
-
-  .logo-text {
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
-}
-
-.nav {
-  display: flex;
-  gap: 2rem;
-
-  &-link {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: opacity $transition-speed ease;
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-}
-
-.main-content {
-  flex: 1;
-  max-width: $max-width;
-  width: 100%;
-  margin: 0 auto;
-  padding: 3rem 2rem;
-}
-
-// Footer
-.footer {
-  background: $dark-gray;
-  color: white;
-  padding: 2rem;
-  text-align: center;
-  margin-top: auto;
-
-  p {
-    margin-bottom: 1rem;
-    color: white;
-  }
-
-  &-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-
-    a {
-      color: white;
-      text-decoration: none;
-      transition: opacity 0.3s ease;
-
-      &:hover {
-        opacity: 0.7;
-      }
-    }
-  }
-}
 
 // --- RESPONSIVITA (Media Queries) ---
 @media (max-width: 768px) {
