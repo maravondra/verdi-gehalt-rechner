@@ -94,16 +94,18 @@ p {
   }
 
   &-badge {
-    background: white;
+    background: $verdi-red;
     color: $verdi-red;
-    padding: 0.5rem 0.75rem;
-    border-radius: 4px;
+
     font-weight: 900;
     font-size: 0.85rem;
   }
 
   &-verdi {
-    letter-spacing: 0.1em;
+    img {
+      background-color: $verdi-red; /* Bílé pozadí (nebo jakékoliv jiné) */
+      width: 50px; /* Nastav si velikost, jakou potřebuješ */
+    }
   }
 
   &-text {
