@@ -1,5 +1,16 @@
 @use '../../../styles/statisticCard' as *;
 
+// --- PROMĚNNÉ ---
+$verdi-red: #e31c23;
+$telekom-magenta: #e20074;
+$dark-gray: #333333;
+$light-gray: #f5f5f5;
+$border-gray: #dddddd;
+$text-primary: #2b2b2b;
+$text-secondary: #666666;
+$success: #00a651;
+$warning: #ff9800;
+
 .badge {
   display: inline-block;
   padding: 0.25em 0.4em;
@@ -49,4 +60,34 @@
   background-color: #e2e8f0;
   border-radius: 4px;
   display: inline-block;
+}
+
+.logo {
+  &-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  &-badge {
+    background: $verdi-red;
+    color: $verdi-red;
+
+    font-weight: 900;
+    font-size: 0.85rem;
+  }
+
+  &-verdi {
+    img {
+      background-color: $verdi-red; /* Bílé pozadí (nebo jakékoliv jiné) */
+      width: 50px; /* Nastav si velikost, jakou potřebuješ */
+    }
+  }
+
+  &-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
 }
