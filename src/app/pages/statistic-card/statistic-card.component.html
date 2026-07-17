@@ -17,6 +17,9 @@
         @if (isEuro()) {
           {{ correctionOfValue() | currency: 'EUR' : 'symbol' : '1.2-2' }}
         } @else {
+          @if (shoowingPlus()) {
+            {{ correctionOfValue() > 0 ? '+' : '' }}
+          }
           {{ correctionOfValue() | number: '1.2-2' }} {{ config().suffix }}
         }
       </span>
