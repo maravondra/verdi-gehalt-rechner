@@ -24,6 +24,7 @@ export class StatisticCardComponent {
   isMinusActivation = input<boolean>(false);
   removeMinus = input<boolean>(false);
   showIcon = input<boolean>(true);
+  shoowingPlus = input<boolean>(false);
 
   valueClass = computed(() => {
     // Pokud není mínus aktivované, vrátí jen základní třídu
