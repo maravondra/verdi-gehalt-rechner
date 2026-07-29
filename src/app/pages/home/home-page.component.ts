@@ -16,8 +16,17 @@ export class HomePageComponent {
     throw new Error('Method not implemented.');
   }
   calculateSalary() {
+    const salaryValue = this.salary2023(); // Přečte hodnotu ze signalu
+
+    // Pokud je salary null nebo undefined, neposíláme neplatný parametr
+    if (salaryValue === null || salaryValue === undefined) {
+      this.router.navigate(['/rechner']);
+      return;
+    }
+
     this.router.navigate(['/rechner'], {
-      queryParams: { salary: this.salary2023() },
+      // Zajistíme, že se posílá čisté číslo/string bez neplatných znaků
+      queryParams: { salary: Math.round(salaryValue) },
     });
   }
   salary2023 = signal<number | null>(null);

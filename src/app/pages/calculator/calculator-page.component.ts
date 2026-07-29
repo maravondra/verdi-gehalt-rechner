@@ -50,7 +50,14 @@ export class CalculatorPageComponent implements OnInit {
   isLoading = signal(false);
   private route = inject(ActivatedRoute);
   defaultSalary = signal<number>(
-    Number(this.route.snapshot.queryParamMap.get('salary') || 50000) / 12,
+    (() => {
+      const param = this.route.snapshot.queryParamMap.get('salary');
+      // Bezpečný převod na číslo (ošetří null, undefined i textové chyby)
+      const parsedSalary = param ? parseFloat(param) : NaN;
+      const finalSalary = !isNaN(parsedSalary) ? parsedSalary : 50000;
+
+      return finalSalary / 12;
+    })(),
   );
 
   private readonly rateTSystem = 0.04; // 15% Gehaltserhöhung für T-System
