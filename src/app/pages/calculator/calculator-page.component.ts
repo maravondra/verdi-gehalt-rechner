@@ -1,6 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal, computed } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  signal,
+  computed,
+  inject,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { StatisticCardComponent } from '../statistic-card/statistic-card.component';
 import { CommonModule, registerLocaleData, CurrencyPipe, DatePipe } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
@@ -41,7 +48,10 @@ export interface MetricState {
 })
 export class CalculatorPageComponent implements OnInit {
   isLoading = signal(false);
-  readonly defaultSalary = signal<number>((history.state?.salary ?? 0) / 12);
+  private route = inject(ActivatedRoute);
+  defaultSalary = signal<number>(
+    Number(this.route.snapshot.queryParamMap.get('salary') || 50000) / 12,
+  );
 
   private readonly rateTSystem = 0.04; // 15% Gehaltserhöhung für T-System
   private readonly rateTelekom = 0.06; // 10% Gehaltserhöhung für Telekom
